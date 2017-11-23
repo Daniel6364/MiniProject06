@@ -2,6 +2,8 @@ package com.model2.mvc.service.product;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
 
