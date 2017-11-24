@@ -78,7 +78,6 @@
 			</if>
 		</if>
 	</where>
-
 		
 	<if test="searchPrice != null">
 		<if test="searchPrice == lowPrice">

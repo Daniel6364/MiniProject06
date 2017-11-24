@@ -99,25 +99,22 @@ public class ProductController {
 	
 	@RequestMapping("/updateProduct.do")
 	public String updateProduct( @ModelAttribute("product") Product product , 
-			Model model, HttpSession session ) throws Exception{
+			Model model, HttpServletRequest request ) throws Exception{
 
 		System.out.println("/updateProduct.do");
 		//Business Logic
+		product.setManuDate(request.getParameter("manuDate").replace("-", ""));
 		productService.updateProduct(product);
+		model.addAttribute(product);
 		
-//		String sessionId=((Product)session.getAttribute("product")).getProdNo();
-		int sessionId=((Product)session.getAttribute("product")).getProdNo();
-		if(sessionId == (product.getProdNo()) ){
-			session.setAttribute("product", product);
-		}
-		
-//		return "forward:/product/updateProduct.jsp";
-		return "redirect:/getProduct.do?prodNo="+product.getProdNo();
+		return "forward:/product/updateProduct.jsp";
 	}
 	
 	@RequestMapping("/listProduct.do")
 	public String listProduct( @ModelAttribute("search") Search search , 
-			Model model, @RequestParam("menu") String menu ) throws Exception{
+			Model model, @RequestParam("menu") String menu, 
+				@RequestParam(value="lowPriceCondition", required=false) String lowPriceCondition,
+				@RequestParam(value="highPriceCondition", required=false) String highPriceCondition ) throws Exception{
 		
 		System.out.println("/listProduct.do");
 		
@@ -126,11 +123,27 @@ public class ProductController {
 		}
 		search.setPageSize(pageSize);
 		
-		// Business logic 수행
-		Map<String , Object> map=productService.getProductList(search);
+		System.out.println("1 ="+ lowPriceCondition);
+		System.out.println("2 ="+ highPriceCondition);
 		
-		Page resultPage = new Page( search.getCurrentPage(), 
-				((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		if (search.getSearchPrice() != null) {
+			if (lowPriceCondition.matches("lowPrice") && highPriceCondition == null) {
+				System.out.println("2-1 ="+ lowPriceCondition);
+				System.out.println("2-2 ="+ highPriceCondition);
+				search.setSearchPrice(lowPriceCondition);
+			} else	{
+				System.out.println("3-1 ="+ lowPriceCondition);
+				System.out.println("3-2 ="+ highPriceCondition);
+				search.setSearchPrice(highPriceCondition);
+			}
+		}
+		
+		System.out.println("[price] ==> " + search.getSearchPrice());
+			
+		// Business logic 수행
+		Map<String , Object> map = productService.getProductList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 
 		// Model 과 View 연결

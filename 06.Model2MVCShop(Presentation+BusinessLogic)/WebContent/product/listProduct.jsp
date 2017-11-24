@@ -17,13 +17,15 @@ function fncGetList(currentPage) {
 
 function fncLowPrice(currentPage) {
 	document.getElementById("currentPage").value = currentPage;
-	document.getElementById("lowPriceSearch").value = 'lowPrice';
+	document.getElementById("lowPriceSearch").value = "lowPrice";
+	document.getElementById("highPriceSearch").value = null;
    	document.detailForm.submit();		
 }
  
 function fncHighPrice(currentPage) {
 	document.getElementById("currentPage").value = currentPage;
-	document.getElementById("highPriceSearch").value = 'highPrice';
+	document.getElementById("lowPriceSearch").value = null;
+	document.getElementById("highPriceSearch").value = "highPrice";
    	document.detailForm.submit();		
 }
  
@@ -43,7 +45,7 @@ function fncHighPrice(currentPage) {
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">
-						${ requestScope.menu == 'manage' ? "상품관리" : "상품 목록조회" }
+						${ menu == 'manage' ? "상품관리" : "상품 목록조회" }
 					</td>
 				</tr>
 			</table>
@@ -96,10 +98,11 @@ function fncHighPrice(currentPage) {
 	<tr>
 		
 		<td colspan="4">
-			<input type="hidden" id="lowPriceSearch" name="priceCondition" value=""/>
+		
+			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" value=""/>
 				<a href = "javascript:fncLowPrice('${ search.currentPage }')">[낮은가격순 ▼] </a>
 	
-			<input type="hidden" id="highPriceSearch" name="priceCondition" value=""/>
+			<input type="hidden" id="highPriceSearch" name="highPriceCondition" value=""/>
 				<a href = "javascript:fncHighPrice('${ search.currentPage }')">[높은가격순 ▲] </a>
 		</td>
 	</tr>
@@ -124,7 +127,7 @@ function fncHighPrice(currentPage) {
 			<td align="center">${ i }</td>
 			<td></td>
 			<td align="left">
-				<a href="/getProduct.do?prodNo=${ product.prodNo }&menu=${ requestScope.menu }">${ product.prodName }</a>
+				<a href="/getProduct.do?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a>
 			</td>
 			<td></td>
 			<td align="left">${ product.price }</td>
@@ -132,11 +135,11 @@ function fncHighPrice(currentPage) {
 			<td align="left">${ product.prodDetail }</td>
 			<td></td>
 			<td align="left">
-				<c:if test = "${ requestScope.menu == 'search' }">
+				<c:if test = "${ menu == 'search' }">
 					<c:if test = "${ product.proTranCode == null }">판매중</c:if> 
 					<c:if test = "${ product.proTranCode != null }">재고 없음</c:if>
 				</c:if>
-				<c:if test = "${ requestScope.menu == 'manage' }">
+				<c:if test = "${ menu == 'manage' }">
 					<c:if test = "${ product.proTranCode == null }">판매중</c:if>
 					<c:if test = "${ product.proTranCode == '0  ' }">구매완료
 						<a href="/updateTranCodeByProd.do?prodNo=${product.prodNo}&tranCode=1">배송하기</a></c:if>
