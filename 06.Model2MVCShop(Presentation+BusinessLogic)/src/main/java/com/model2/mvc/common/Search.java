@@ -67,7 +67,7 @@ public class Search {
 		return "Search [currentPage=" + currentPage + ", searchCondition="
 				+ searchCondition + ", searchKeyword=" + searchKeyword
 				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
-				+ ", startRowNum=" + startRowNum + "]";
+				+ ", startRowNum=" + startRowNum + ", searchPrice=" + searchPrice + "]";
 	}
 	
 	public String getSearchPrice() {

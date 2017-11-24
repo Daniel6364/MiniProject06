@@ -113,32 +113,21 @@ public class ProductController {
 	@RequestMapping("/listProduct.do")
 	public String listProduct( @ModelAttribute("search") Search search , 
 			Model model, @RequestParam("menu") String menu, 
-				@RequestParam(value="lowPriceCondition", required=false) String lowPriceCondition,
-				@RequestParam(value="highPriceCondition", required=false) String highPriceCondition ) throws Exception{
+				@RequestParam(value="lowPriceCondition", required=false, defaultValue="") String lowPriceCondition,
+				@RequestParam(value="highPriceCondition", required=false, defaultValue="") String highPriceCondition ) throws Exception{
 		
 		System.out.println("/listProduct.do");
-		
+				
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		
-		System.out.println("1 ="+ lowPriceCondition);
-		System.out.println("2 ="+ highPriceCondition);
-		
-		if (search.getSearchPrice() != null) {
-			if (lowPriceCondition.matches("lowPrice") && highPriceCondition == null) {
-				System.out.println("2-1 ="+ lowPriceCondition);
-				System.out.println("2-2 ="+ highPriceCondition);
-				search.setSearchPrice(lowPriceCondition);
-			} else	{
-				System.out.println("3-1 ="+ lowPriceCondition);
-				System.out.println("3-2 ="+ highPriceCondition);
-				search.setSearchPrice(highPriceCondition);
-			}
+		if (lowPriceCondition.equals("lowPrice")) {
+			search.setSearchPrice(lowPriceCondition);
+		} else if (highPriceCondition.equals("highPrice")) {
+			search.setSearchPrice(highPriceCondition);
 		}
-		
-		System.out.println("[price] ==> " + search.getSearchPrice());
 			
 		// Business logic ผ๖วเ
 		Map<String , Object> map = productService.getProductList(search);

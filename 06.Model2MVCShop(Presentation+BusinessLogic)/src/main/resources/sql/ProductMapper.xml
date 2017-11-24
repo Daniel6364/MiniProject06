@@ -79,12 +79,12 @@
 		</if>
 	</where>
 		
-	<if test="searchPrice != null">
-		<if test="searchPrice == lowPrice">
+	<if test="searchPrice !=null">
+		<if test="searchPrice =='lowPrice' ">
 			ORDER BY p.price ASC			
 		</if>
 			
-		<if test="searchPrice == highPrice">
+		<if test="searchPrice =='highPrice' ">
 			ORDER BY p.price DESC
 		</if>			
 	</if>
