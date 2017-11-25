@@ -104,7 +104,7 @@
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
 		FROM( SELECT prod_no , prod_name , price
-		FROM users
+		FROM product
 		<if test="searchCondition != null">
 			<where>
 				<if test="searchCondition == 0 and searchKeyword !='' ">
@@ -112,6 +112,9 @@
 				</if>
 				<if test="searchCondition == 1 and searchKeyword !='' ">
 					prod_name = #{searchKeyword}
+				</if>
+				<if test="searchCondition == 2 and searchKeyword !='' ">
+					price = #{searchKeyword}
 				</if>
 			</where>
 		</if>

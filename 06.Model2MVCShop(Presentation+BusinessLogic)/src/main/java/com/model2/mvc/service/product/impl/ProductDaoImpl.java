@@ -50,7 +50,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("UserMapper.getTotalCount", search);
+		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
 	}
 
 }

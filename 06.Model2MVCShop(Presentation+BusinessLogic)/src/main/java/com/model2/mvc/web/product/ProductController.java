@@ -52,19 +52,20 @@ public class ProductController {
 		
 		return "redirect:/product/addProductView.jsp";
 	}
-	
+
 	@RequestMapping("/addProduct.do")
 	public String addProduct( @ModelAttribute("product") Product product, 
-			HttpServletRequest request ) throws Exception {
+			@RequestParam("manuDate") String manuDate ) throws Exception {
 
 		System.out.println("/addProduct.do");
 
 		//Business Logic
-		product.setManuDate(request.getParameter("manuDate").replace("-", ""));
+		product.setManuDate(manuDate.replace("-", ""));
 		productService.addProduct(product);
 		
 		return "forward:/product/addProduct.jsp";
 	}
+	
 	
 	@RequestMapping("/getProduct.do")
 	public String getProduct( @RequestParam("prodNo") String prodNo , Model model, 
@@ -96,19 +97,20 @@ public class ProductController {
 		
 		return "forward:/product/updateProductView.jsp";
 	}
-	
+
 	@RequestMapping("/updateProduct.do")
 	public String updateProduct( @ModelAttribute("product") Product product , 
-			Model model, HttpServletRequest request ) throws Exception{
+			Model model, @RequestParam("manuDate") String manuDate ) throws Exception{
 
 		System.out.println("/updateProduct.do");
 		//Business Logic
-		product.setManuDate(request.getParameter("manuDate").replace("-", ""));
+		product.setManuDate(manuDate.replace("-", ""));
 		productService.updateProduct(product);
 		model.addAttribute(product);
 		
 		return "forward:/product/updateProduct.jsp";
 	}
+	
 	
 	@RequestMapping("/listProduct.do")
 	public String listProduct( @ModelAttribute("search") Search search , 
@@ -118,7 +120,7 @@ public class ProductController {
 		
 		System.out.println("/listProduct.do");
 				
-		if(search.getCurrentPage() == 0 ){
+		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
@@ -133,7 +135,7 @@ public class ProductController {
 		Map<String , Object> map = productService.getProductList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		System.out.println("[resultPage]"+resultPage);
 
 		// Model °ú View ¿¬°á
 		model.addAttribute("list", map.get("list"));

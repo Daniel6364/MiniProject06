@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!-- General Paging -->
 <c:if test="${ search.searchPrice == null || search.searchPrice == '' }">
 
 	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }"> ¢¸ [prev] </c:if>
@@ -22,9 +23,8 @@
 	
 </c:if>
 
-<c:if test="${ search.searchPrice != null 
-	&& search.searchPrice != '' 
-		&& search.searchPrice == 'lowPrice' }">
+<!-- lowPrice Paging -->
+<c:if test="${ search.searchPrice != null && search.searchPrice == 'lowPrice' }">
 
 	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }"> ¢¸ [prev] </c:if>
 	
@@ -44,9 +44,8 @@
 	
 </c:if>
 
-<c:if test="${ search.searchPrice != null 
-	&& search.searchPrice != '' 
-		&& search.searchPrice == 'highPrice' }">
+<!-- highPrice Paging -->
+<c:if test="${ search.searchPrice != null && search.searchPrice == 'highPrice' }">
 
 	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }"> ¢¸ [prev] </c:if>
 	

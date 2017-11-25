@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
-import com.model2.mvc.service.domain.User;
-import com.model2.mvc.service.user.UserService;
+import com.model2.mvc.service.domain.Purchase;
+import com.model2.mvc.service.purchase.PurchaseService;
 
 
 //==> 회원관리 Controller
@@ -26,8 +26,8 @@ public class PurchaseController {
 	
 	///Field
 	@Autowired
-	@Qualifier("userServiceImpl")
-	private UserService userService;
+	@Qualifier("purchaseServiceImpl")
+	private PurchaseService purchaseService;
 	//setter Method 구현 않음
 		
 	public PurchaseController(){
@@ -45,50 +45,62 @@ public class PurchaseController {
 	int pageSize;
 	
 	
-	@RequestMapping("/addUserView.do")
-	public String addUserView() throws Exception {
+	@RequestMapping("/addPurchaseView.do")
+	public String addPurchaseView() throws Exception {
 
-		System.out.println("/addUserView.do");
+		System.out.println("/addPurchaseView.do");
 		
-		return "redirect:/user/addUserView.jsp";
+		return "redirect:/purchase/addPurchaseView.jsp";
 	}
 	
-	@RequestMapping("/addUser.do")
-	public String addUser( @ModelAttribute("user") User user ) throws Exception {
+	@RequestMapping("/addPurchase.do")
+	public String addPurchase( @ModelAttribute("purchase") Purchase purchase ) throws Exception {
 
-		System.out.println("/addUser.do");
+		System.out.println("/addPurchase.do");
 		//Business Logic
-		userService.addUser(user);
+		purchaseService.addPurchase(purchase);
 		
-		return "redirect:/user/loginView.jsp";
+		return "redirect:/purchase/addPurchase.jsp";
 	}
 	
-	@RequestMapping("/getUser.do")
-	public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
+	@RequestMapping("/getPurchase.do")
+	public String getPurchase( @RequestParam("tranNo") String tranNo , Model model ) throws Exception {
 		
-		System.out.println("/getUser.do");
+		System.out.println("/getPurchase.do");
 		//Business Logic
-		User user = userService.getUser(userId);
+		Purchase purchase = purchaseService.getPurchase(Integer.parseInt(tranNo));
 		// Model 과 View 연결
-		model.addAttribute("user", user);
+		model.addAttribute("purchase", purchase);
 		
-		return "forward:/user/getUser.jsp";
+		return "forward:/pruchase/getPurchase.jsp";
 	}
 	
-	@RequestMapping("/updateUserView.do")
-	public String updateUserView( @RequestParam("userId") String userId , Model model ) throws Exception{
-
-		System.out.println("/updateUserView.do");
+	@RequestMapping("/getPurchase.do")
+	public String getPurchase2( @RequestParam("prodNo") String prodNo , Model model ) throws Exception {
+		
+		System.out.println("/getPurchase.do");
 		//Business Logic
-		User user = userService.getUser(userId);
+		Purchase purchase = purchaseService.getPurchase2(Integer.parseInt(prodNo));
 		// Model 과 View 연결
-		model.addAttribute("user", user);
+		model.addAttribute("purchase", purchase);
 		
-		return "forward:/user/updateUser.jsp";
+		return "forward:/pruchase/getPurchase.jsp";
 	}
 	
-	@RequestMapping("/updateUser.do")
-	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
+	@RequestMapping("/updatePurchaseView.do")
+	public String updatePurchaseView( @RequestParam("prodNo") String prodNo , Model model ) throws Exception{
+
+		System.out.println("/updatePurchaseView.do");
+		//Business Logic
+		Purchase purchase = purchaseService.getPurchase2(Integer.parseInt(prodNo));
+		// Model 과 View 연결
+		model.addAttribute("purchase", purchase);
+		
+		return "forward:/purchase/updatePurchaseView.jsp";
+	}
+	
+	@RequestMapping("/updatePurchase.do")
+	public String updatePurchase( @ModelAttribute("purchase") Purchase purchase, Model model , HttpSession session) throws Exception{
 
 		System.out.println("/updateUser.do");
 		//Business Logic

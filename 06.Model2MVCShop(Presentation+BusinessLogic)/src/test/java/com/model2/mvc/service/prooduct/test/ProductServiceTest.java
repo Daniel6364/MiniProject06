@@ -33,7 +33,7 @@ public class ProductServiceTest {
 		Product	product = new Product();
 		product.setProdName("testProdName");
 		product.setProdDetail("testProdDetail");
-		product.setManuDate("20171116");
+		product.setManuDate("20171125");
 		product.setPrice(66666);
 		product.setFileName("testImageFile.jpg");
 		
@@ -48,7 +48,7 @@ public class ProductServiceTest {
 		//==> API 확인
 		Assert.assertEquals("testProdName", product.getProdName());
 		Assert.assertEquals("testProdDetail", product.getProdDetail());
-		Assert.assertEquals("20171116", product.getManuDate());
+		Assert.assertEquals("20171125", product.getManuDate());
 		Assert.assertEquals(66666, product.getPrice());
 		Assert.assertEquals("testImageFile.jpg", product.getFileName());
 	}
@@ -65,18 +65,19 @@ public class ProductServiceTest {
 //		product.setFileName("testImageFile.jpg");
 		
 //		product = productService.getProduct(product.getProdNo());
-		product = productService.getProduct(10000);
+		product = productService.getProduct(10160);
 
 		//==> console 확인
 		System.out.println("[testGetProduct] : "+product);
 		
 		//==> API 확인
-//		Assert.assertEquals("바디샤워", product.getProdName());
-//		Assert.assertEquals("롭스", product.getProdDetail());
-//		Assert.assertEquals("20150905", product.getManuDate());
-//		Assert.assertEquals(9800, product.getPrice());
-//		Assert.assertEquals("BodyShower.jpg", product.getFileName());
-
+		Assert.assertEquals("마들렌", product.getProdName());
+		Assert.assertEquals("국내산 쿠키", product.getProdDetail());
+		Assert.assertEquals("20171101", product.getManuDate());
+		Assert.assertEquals(3600, product.getPrice());
+		Assert.assertEquals(null, product.getFileName());
+		Assert.assertNull(product.getFileName());
+		
 		Assert.assertNotNull(productService.getProduct(10002));
 		Assert.assertNotNull(productService.getProduct(10003));
 	}
@@ -84,12 +85,12 @@ public class ProductServiceTest {
 	//@Test
 	public void testUpdateProduct() throws Exception{
 		 
-		Product product = productService.getProduct(10129);
+		Product product = productService.getProduct(10162);
 		Assert.assertNotNull(product);
 
 		Assert.assertEquals("testProdName", product.getProdName());
 		Assert.assertEquals("testProdDetail", product.getProdDetail());
-		Assert.assertEquals("20171116", product.getManuDate());
+		Assert.assertEquals("20171125", product.getManuDate());
 		Assert.assertEquals(66666, product.getPrice());
 		Assert.assertEquals("testImageFile.jpg", product.getFileName());		
 		
@@ -101,7 +102,7 @@ public class ProductServiceTest {
 		
 		productService.updateProduct(product);
 		
-		product = productService.getProduct(10129);
+		product = productService.getProduct(10162);
 		Assert.assertNotNull(product);
 		
 		//==> console 확인
@@ -122,10 +123,12 @@ public class ProductServiceTest {
 	 	Search search = new Search();
 	 	search.setCurrentPage(1);
 	 	search.setPageSize(3);
+	 	search.setSearchCondition("1");
+	 	search.setSearchKeyword("마들렌");
 	 	Map<String,Object> map = productService.getProductList(search);
 	 	
 	 	List<Object> list = (List<Object>)map.get("list");
-	 	Assert.assertEquals(3, list.size());
+	 	Assert.assertEquals(1, list.size());
 	 	
 		//==> console 확인
 	 	System.out.println(list);
@@ -138,11 +141,11 @@ public class ProductServiceTest {
 	 	search.setCurrentPage(1);
 	 	search.setPageSize(3);
 	 	search.setSearchCondition("0");
-	 	search.setSearchKeyword("");
+	 	search.setSearchKeyword("10000");
 	 	map = productService.getProductList(search);
 	 	
 	 	list = (List<Object>)map.get("list");
-	 	Assert.assertEquals(3, list.size());
+	 	Assert.assertEquals(1, list.size());
 	 	
 	 	//==> console 확인
 	 	System.out.println("[testGetProdcutProduct] : " + list);
