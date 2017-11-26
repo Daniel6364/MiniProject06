@@ -67,7 +67,7 @@
 		t.order_date, t.dlvy_date  
 		FROM transaction t  
 		LEFT JOIN product p ON t.prod_no = p.prod_no  
-		WHERE t.buyer_id = #{buyerId} 
+		WHERE t.buyer_id = #{buyer.userId} 
 	</sql>
 
 
