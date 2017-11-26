@@ -113,10 +113,12 @@ public class ProductController {
 	
 	
 	@RequestMapping("/listProduct.do")
-	public String listProduct( @ModelAttribute("search") Search search , 
-			Model model, @RequestParam("menu") String menu, 
+	public String listProduct( @ModelAttribute("search") Search search, 
+			@ModelAttribute("product") Product product,
+			@RequestParam("menu") String menu, 
 				@RequestParam(value="lowPriceCondition", required=false, defaultValue="") String lowPriceCondition,
-				@RequestParam(value="highPriceCondition", required=false, defaultValue="") String highPriceCondition ) throws Exception{
+				@RequestParam(value="highPriceCondition", required=false, defaultValue="") String highPriceCondition,
+				Model model ) throws Exception{
 		
 		System.out.println("/listProduct.do");
 				
@@ -125,11 +127,15 @@ public class ProductController {
 		}
 		search.setPageSize(pageSize);
 		
+		// Price Searching
 		if (lowPriceCondition.equals("lowPrice")) {
 			search.setSearchPrice(lowPriceCondition);
 		} else if (highPriceCondition.equals("highPrice")) {
 			search.setSearchPrice(highPriceCondition);
 		}
+		
+		System.out.println("[%% search] => " + search);
+		System.out.println("[%% product] => " + product);
 			
 		// Business logic ผ๖วเ
 		Map<String , Object> map = productService.getProductList(search);

@@ -97,8 +97,9 @@ public class PurchaseController {
 		
 		return "forward:/purchase/getPurchase.jsp";
 	}
-	
-	//@RequestMapping("/getPurchase.do")
+	 
+	/*
+	@RequestMapping("/getPurchase.do")
 	public String getPurchase2( @RequestParam("prodNo") String prodNo , Model model ) throws Exception {
 		
 		System.out.println("/getPurchase.do");
@@ -109,6 +110,7 @@ public class PurchaseController {
 		
 		return "forward:/purchase/getPurchase.jsp";
 	}
+	*/
 	
 	@RequestMapping("/updatePurchaseView.do")
 	public String updatePurchaseView( @RequestParam("tranNo") String tranNo , Model model ) throws Exception{
@@ -123,11 +125,17 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping("/updatePurchase.do")
-	public String updatePurchase( @ModelAttribute("purchase") Purchase purchase, Model model) throws Exception{
+	public String updatePurchase( @ModelAttribute("purchase") Purchase purchase, 
+			@RequestParam("tranNo") String tranNo, Model model) throws Exception{
 
 		System.out.println("/updatePurchase.do");
 		//Business Logic
+		
+		purchase.setTranNo(Integer.parseInt(tranNo));
+		
 		purchaseService.updatePurchase(purchase);
+		
+		purchase = purchaseService.getPurchase(Integer.parseInt(tranNo));
 
 		model.addAttribute("purchase", purchase);
 		
@@ -173,23 +181,28 @@ public class PurchaseController {
 		purchaseService.updateTranCode(purchase);
 		model.addAttribute("purchase", purchase);
 		
+//		return "forward:/purchase/listPurchase.jsp";
 		return "forward:/listPurchase.do";
 	}
 	
-	@RequestMapping("/UpdateTranCodeByProd.do")
-	public String UpdateTranCodeByProd( @ModelAttribute("purchase") Purchase purchase, 
+	@RequestMapping("/updateTranCodeByProd.do")
+	public String updateTranCodeByProd( @ModelAttribute("purchase") Purchase purchase, 
 			@RequestParam("prodNo") String prodNo, @RequestParam("tranCode") String tranCode, Model model ) throws Exception {
 		
-		System.out.println("/UpdateTranCodeByProd.do");
+		System.out.println("/updateTranCodeByProd.do");
 
 		purchase = purchaseService.getPurchase2(Integer.parseInt(prodNo));
 		
 		purchase.setTranNo(purchase.getTranNo());
 		purchase.setTranCode(tranCode);
 		
+		System.out.println("[1]"+purchase.getTranNo());
+		System.out.println("[2]"+purchase.getTranCode());
+		
 		purchaseService.updateTranCode(purchase);
 		model.addAttribute("purchase", purchase);
 		
+//		return "forward:/purchase/listProduct.do?menu=manage";
 		return "forward:/listProduct.do?menu=manage";
 	}
 	

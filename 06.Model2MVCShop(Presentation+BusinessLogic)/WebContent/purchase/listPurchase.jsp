@@ -69,7 +69,7 @@ function fncGetList(currentPage) {
 		<c:set var="i" value="${ i + 1 }" />
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=${ purchase.tranNo }">${ i + 1 }</a>
+			<a href="/getPurchase.do?tranNo=${ purchase.tranNo }">${ i }</a>
 		</td>
 		<td></td>
 		<td align="left">

@@ -52,7 +52,7 @@
 		receiver_phone, dlvy_addr, dlvy_request, tran_status_code, 
 		order_date, dlvy_date 
 		FROM transaction
-		WHERE tran_no = #{value}
+		WHERE tran_no = #{tranNo}
 	</select>
 	
 	<select id="getPurchase2" parameterType="int" resultMap="purchaseSelectMap">
@@ -65,9 +65,12 @@
 	<update id="updatePurchase" parameterType="purchase">
 		UPDATE transaction
 		<set>
-			payment_option = #{paymentOption}, receiver_name = #{receiverName},
-			receiver_phone = #{receiverPhone}, dlvy_addr = #{dlvyAddr},
-			dlvy_request = #{dlvyRequest}, dlvy_date = #{dlvyDate}
+			payment_option = #{paymentOption:CHAR}, 
+			receiver_name = #{receiverName:VARCHAR},
+			receiver_phone = #{receiverPhone:VARCHAR}, 
+			dlvy_addr = #{dlvyAddr:VARCHAR},
+			dlvy_request = #{dlvyRequest:VARCHAR}, 
+			dlvy_date = #{dlvyDate:DATE}
 		</set>
 		WHERE tran_no = #{tranNo}
 	</update>
@@ -109,7 +112,7 @@
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
 		FROM( SELECT tran_no
-		FROM transaction		
+		FROM transaction
 		) countTable
 	</select>
 </mapper>
