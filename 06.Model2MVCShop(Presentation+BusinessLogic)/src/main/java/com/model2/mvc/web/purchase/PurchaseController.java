@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.purchase.PurchaseService;
+import com.model2.mvc.service.user.UserService;
+import com.model2.mvc.service.product.ProductService;
 
 
 //==> 회원관리 Controller
@@ -30,6 +33,15 @@ public class PurchaseController {
 	@Autowired
 	@Qualifier("purchaseServiceImpl")
 	private PurchaseService purchaseService;
+	
+	@Autowired
+	@Qualifier("productServiceImpl")
+	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+
 	//setter Method 구현 않음
 		
 	public PurchaseController(){
@@ -48,21 +60,32 @@ public class PurchaseController {
 	
 	
 	@RequestMapping("/addPurchaseView.do")
-	public String addPurchaseView() throws Exception {
+	public String addPurchaseView(@ModelAttribute("product") Product product,
+			@ModelAttribute("purchase") Purchase purchase,
+			@RequestParam("prod_no") String prodNo, Model model) throws Exception {
 
 		System.out.println("/addPurchaseView.do");
 		
-		return "redirect:/purchase/addPurchaseView.jsp";
+		product = productService.getProduct(Integer.parseInt(prodNo));
+		model.addAttribute("product", product);
+		
+		
+		
+		return "forward:/purchase/addPurchaseView.jsp";
 	}
 	
 	@RequestMapping("/addPurchase.do")
-	public String addPurchase( @ModelAttribute("purchase") Purchase purchase ) throws Exception {
+	public String addPurchase( @ModelAttribute("purchase") Purchase purchase,
+			@RequestParam("prodNo") String prodNo, @RequestParam("buyerId") String buyerId) throws Exception {
 
 		System.out.println("/addPurchase.do");
 		//Business Logic
+		purchase.setPurchaseProd(productService.getProduct(Integer.parseInt(prodNo)));
+		purchase.setBuyer(userService.getUser(buyerId));
+		
 		purchaseService.addPurchase(purchase);
 		
-		return "redirect:/purchase/addPurchase.jsp";
+		return "forward:/purchase/addPurchase.jsp";
 	}
 	
 	@RequestMapping("/getPurchase.do")
@@ -94,7 +117,7 @@ public class PurchaseController {
 
 		System.out.println("/updatePurchaseView.do");
 		//Business Logic
-		Purchase purchase = purchaseService.getPurchase2(Integer.parseInt(tranNo));
+		Purchase purchase = purchaseService.getPurchase(Integer.parseInt(tranNo));
 		// Model 과 View 연결
 		model.addAttribute("purchase", purchase);
 		
@@ -130,7 +153,7 @@ public class PurchaseController {
 		Map<String, Object> map = purchaseService.getPurchaseList(search, buyerId.getUserId());
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println("[###]"+resultPage);
+		System.out.println(resultPage);
 		
 		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
@@ -139,4 +162,38 @@ public class PurchaseController {
 		
 		return "forward:/purchase/listPurchase.jsp";
 	}
+	
+	@RequestMapping("/updateTranCode.do")
+	public String updateTranCode( @ModelAttribute("purchase") Purchase purchase, 
+			@RequestParam("tranNo") String tranNo, @RequestParam("tranCode") String tranCode, Model model ) throws Exception {
+
+		System.out.println("/updateTranCode.do");
+		
+		purchase.setTranNo(Integer.parseInt(tranNo));
+		purchase.setTranCode(tranCode);
+		
+		purchaseService.updateTranCode(purchase);
+		model.addAttribute("purchase", purchase);
+		
+		return "forward:/listPurchase.do";
+	}
+	
+	@RequestMapping("/UpdateTranCodeByProd.do")
+	public String UpdateTranCodeByProd( @ModelAttribute("purchase") Purchase purchase, 
+			@RequestParam("prodNo") String prodNo, @RequestParam("tranCode") String tranCode, Model model ) throws Exception {
+		
+		System.out.println("/UpdateTranCodeByProd.do");
+
+		purchase = purchaseService.getPurchase2(Integer.parseInt(prodNo));
+		
+		purchase.setTranNo(purchase.getTranNo());
+		purchase.setTranCode(tranCode);
+		
+		purchaseService.updateTranCode(purchase);
+		model.addAttribute("purchase", purchase);
+		
+		return "forward:/listProduct.do?menu=manage";
+	}
+	
+	
 }
