@@ -32,20 +32,20 @@ public class Purchase {
 	public String getDlvyAddr() {
 		return dlvyAddr;
 	}
-	public void setDlvyAddr(String divyAddr) {
-		this.dlvyAddr = divyAddr;
+	public void setDlvyAddr(String dlvyAddr) {
+		this.dlvyAddr = dlvyAddr;
 	}
 	public String getDlvyDate() {
 		return dlvyDate;
 	}
-	public void setDlvyDate(String divyDate) {
-		this.dlvyDate = divyDate;
+	public void setDlvyDate(String dlvyDate) {
+		this.dlvyDate = dlvyDate;
 	}
 	public String getDlvyRequest() {
 		return dlvyRequest;
 	}
-	public void setDlvyRequest(String divyRequest) {
-		this.dlvyRequest = divyRequest;
+	public void setDlvyRequest(String dlvyRequest) {
+		this.dlvyRequest = dlvyRequest;
 	}
 	public Date getOrderDate() {
 		return orderDate;
@@ -92,8 +92,8 @@ public class Purchase {
 	
 	@Override
 	public String toString() {
-		return "PurchaseVO [buyer=" + buyer + ", divyAddr=" + dlvyAddr
-				+ ", divyDate=" + dlvyDate + ", divyRequest=" + dlvyRequest
+		return "PurchaseVO [buyer=" + buyer + ", dlvyAddr=" + dlvyAddr
+				+ ", dlvyDate=" + dlvyDate + ", dlvyRequest=" + dlvyRequest
 				+ ", orderDate=" + orderDate + ", paymentOption="
 				+ paymentOption + ", purchaseProd=" + purchaseProd
 				+ ", receiverName=" + receiverName + ", receiverPhone="

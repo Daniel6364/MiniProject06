@@ -23,14 +23,27 @@
 	<!-- com.model2.mvc.service.domain.Product AS product use -->
 	<insert id="addPurchase" parameterType="purchase">
 		INSERT
-		INTO transaction (tran_no, prod_no, buyer_id, 
-  						  payment_option, receiver_name, receiver_phone,	
-						  dlvy_addr, dlvy_request, 
-						  tran_status_code, order_date, dlvy_date)
-		VALUES (seq_transaction_tran_no.NEXTVAL, #{purchaseProd.prodNo}, #{buyer.userId}, 
-				#{paymentOption}, #{receiverName}, #{receiverPhone}, 
-				#{dlvyAddr}, #{dlvyRequest},
-				0, SYSDATE, to_date(#{dlvyDate}, 'YYYY/MM/DD'))
+		INTO transaction (tran_no, 
+						  prod_no, buyer_id, 
+  						  payment_option, 
+  						  receiver_name, 
+  						  receiver_phone,	
+						  dlvy_addr, 
+						  dlvy_request, 
+						  tran_status_code, 
+						  order_date, 
+						  dlvy_date)
+		VALUES (seq_transaction_tran_no.NEXTVAL, 
+				#{purchaseProd.prodNo:NUMERIC}, 
+				#{buyer.userId:VARCHAR}, 
+				#{paymentOption:CHAR}, 
+				#{receiverName:VARCHAR}, 
+				#{receiverPhone:VARCHAR}, 
+				#{dlvyAddr:VARCHAR}, 
+				#{dlvyRequest:VARCHAR},
+				0, 
+				SYSDATE, 
+				to_date(#{dlvyDate:DATE}, 'YYYY/MM/DD'))
 	</insert>
 
 	<select id="getPurchase" parameterType="int" resultMap="purchaseSelectMap">
@@ -45,8 +58,8 @@
 	<select id="getPurchase2" parameterType="int" resultMap="purchaseSelectMap">
 		SELECT
 		tran_no
-		FROM transaction
-		WHERE prod_no = #{prod_no}
+		FROM transaction 
+		WHERE prod_no = #{purchaseProd.prodNo}
 	</select>
 
 	<update id="updatePurchase" parameterType="purchase">

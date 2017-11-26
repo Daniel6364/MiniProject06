@@ -61,28 +61,26 @@ public class PurchaseController {
 	
 	@RequestMapping("/addPurchaseView.do")
 	public String addPurchaseView(@ModelAttribute("product") Product product,
-			@ModelAttribute("purchase") Purchase purchase,
 			@RequestParam("prod_no") String prodNo, Model model) throws Exception {
 
 		System.out.println("/addPurchaseView.do");
 		
 		product = productService.getProduct(Integer.parseInt(prodNo));
+		
 		model.addAttribute("product", product);
-		
-		
 		
 		return "forward:/purchase/addPurchaseView.jsp";
 	}
 	
 	@RequestMapping("/addPurchase.do")
-	public String addPurchase( @ModelAttribute("purchase") Purchase purchase,
-			@RequestParam("prodNo") String prodNo, @RequestParam("buyerId") String buyerId) throws Exception {
+	public String addPurchase( @ModelAttribute("purchase") Purchase purchase,  
+			@RequestParam("prodNo") String prodNo, @RequestParam("buyerId") String buyerId ) throws Exception {
 
 		System.out.println("/addPurchase.do");
 		//Business Logic
+		
 		purchase.setPurchaseProd(productService.getProduct(Integer.parseInt(prodNo)));
 		purchase.setBuyer(userService.getUser(buyerId));
-		
 		purchaseService.addPurchase(purchase);
 		
 		return "forward:/purchase/addPurchase.jsp";
