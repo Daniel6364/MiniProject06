@@ -98,20 +98,6 @@ public class PurchaseController {
 		return "forward:/purchase/getPurchase.jsp";
 	}
 	 
-	/*
-	@RequestMapping("/getPurchase.do")
-	public String getPurchase2( @RequestParam("prodNo") String prodNo , Model model ) throws Exception {
-		
-		System.out.println("/getPurchase.do");
-		//Business Logic
-		Purchase purchase = purchaseService.getPurchase2(Integer.parseInt(prodNo));
-		// Model °ú View ¿¬°á
-		model.addAttribute("purchase", purchase);
-		
-		return "forward:/purchase/getPurchase.jsp";
-	}
-	*/
-	
 	@RequestMapping("/updatePurchaseView.do")
 	public String updatePurchaseView( @RequestParam("tranNo") String tranNo , Model model ) throws Exception{
 
@@ -181,7 +167,6 @@ public class PurchaseController {
 		purchaseService.updateTranCode(purchase);
 		model.addAttribute("purchase", purchase);
 		
-//		return "forward:/purchase/listPurchase.jsp";
 		return "forward:/listPurchase.do";
 	}
 	
@@ -202,7 +187,6 @@ public class PurchaseController {
 		purchaseService.updateTranCode(purchase);
 		model.addAttribute("purchase", purchase);
 		
-//		return "forward:/purchase/listProduct.do?menu=manage";
 		return "forward:/listProduct.do?menu=manage";
 	}
 	

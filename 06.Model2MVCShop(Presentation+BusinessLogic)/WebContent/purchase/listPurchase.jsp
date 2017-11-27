@@ -81,19 +81,19 @@ function fncGetList(currentPage) {
 		<td align="left">${ purchase.receiverPhone }</td>
 		<td></td>
 		<td align="left"> 현재
-			<c:if test="${ purchase.tranCode == '0  ' }">
+			<c:if test="${ purchase.tranCode == '0' }">
 				구매완료
 			</c:if>
-			<c:if test="${ purchase.tranCode == '1  ' }">
+			<c:if test="${ purchase.tranCode == '1' }">
 				배송중
 			</c:if>
-			<c:if test="${ purchase.tranCode == '2  ' }">
+			<c:if test="${ purchase.tranCode == '2' }">
 				배송완료
 			</c:if> 상태 입니다.
 		</td>
 		<td></td>
 		<td align="left">
-			<c:if test="${ purchase.tranCode == '1  ' }">
+			<c:if test="${ purchase.tranCode == '1' }">
 				<a href="/updateTranCode.do?tranNo=${ purchase.tranNo }&tranCode=2">물건도착</a>
 			</c:if>
 		</td>

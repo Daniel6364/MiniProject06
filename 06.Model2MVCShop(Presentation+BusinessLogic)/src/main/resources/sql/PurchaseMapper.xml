@@ -101,7 +101,8 @@
 	</select>
 	
 	<update id="updateTranCode" parameterType="purchase">
-		UPDATE transaction
+		UPDATE 
+		transaction
 		<set>
 			tran_status_code = #{tranCode}
 		</set>

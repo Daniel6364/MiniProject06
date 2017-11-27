@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.product.ProductService;
 
 
@@ -114,7 +115,7 @@ public class ProductController {
 	
 	@RequestMapping("/listProduct.do")
 	public String listProduct( @ModelAttribute("search") Search search, 
-			@ModelAttribute("product") Product product,
+			@ModelAttribute("product") Product product,  
 			@RequestParam("menu") String menu, 
 				@RequestParam(value="lowPriceCondition", required=false, defaultValue="") String lowPriceCondition,
 				@RequestParam(value="highPriceCondition", required=false, defaultValue="") String highPriceCondition,
@@ -134,9 +135,6 @@ public class ProductController {
 			search.setSearchPrice(highPriceCondition);
 		}
 		
-		System.out.println("[%% search] => " + search);
-		System.out.println("[%% product] => " + product);
-			
 		// Business logic ผ๖วเ
 		Map<String , Object> map = productService.getProductList(search);
 		

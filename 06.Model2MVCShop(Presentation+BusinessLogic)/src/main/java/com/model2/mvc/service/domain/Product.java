@@ -29,7 +29,11 @@ public class Product {
 		return proTranCode;
 	}
 	public void setProTranCode(String proTranCode) {
-		this.proTranCode = proTranCode;
+		if (proTranCode == null) {
+			this.proTranCode = proTranCode;
+		} else {
+			this.proTranCode = proTranCode.trim();
+		}
 	}
 	public String getFileName() {
 		return fileName;

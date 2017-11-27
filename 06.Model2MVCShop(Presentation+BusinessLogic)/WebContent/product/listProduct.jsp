@@ -141,10 +141,10 @@ function fncHighPrice(currentPage) {
 				</c:if>
 				<c:if test = "${ menu == 'manage' }">
 					<c:if test = "${ product.proTranCode == null }">판매중</c:if>
-					<c:if test = "${ product.proTranCode == '0  ' }">구매완료
+					<c:if test = "${ product.proTranCode == '0' }">구매완료
 						<a href="/updateTranCodeByProd.do?prodNo=${product.prodNo}&tranCode=1">배송하기</a></c:if>
-					<c:if test = "${ product.proTranCode == '1  ' }">배송중</c:if>
-					<c:if test = "${ product.proTranCode == '2  ' }">배송완료</c:if>
+					<c:if test = "${ product.proTranCode == '1' }">배송중</c:if>
+					<c:if test = "${ product.proTranCode == '2' }">배송완료</c:if>
 				</c:if>
 			</td>
 		</tr>
